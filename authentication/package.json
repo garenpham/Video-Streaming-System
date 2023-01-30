@@ -1,0 +1,13 @@
+{
+	"name": "authentication_service",
+	"version": "1.0.0",
+	"description": "Authentication Service",
+	"author": "Pham Minh Tan tpham100@my.bcit.ca",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"express": "^4.16.1"
+	}
+}
