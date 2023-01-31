@@ -1,16 +1,45 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Axios from 'axios';
+import { useRouter } from 'next/router';
 
-const login = () => {
+const user_auth = () => {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
+	const [loginState, setLoginState] = useState('');
 
-	const signIn = (e: { preventDefault: () => void }) => {
-		e.preventDefault();
+	const router = useRouter();
+
+	const register = () => {
+		Axios.post('http://localhost:3004/register', {
+			username: userName,
+			password: password,
+		}).then((response) => console.log(response));
 	};
-	const register = (e: { preventDefault: () => void }) => {
-		e.preventDefault();
+	const signIn = () => {
+		Axios.post('http://localhost:3004/login', {
+			username: userName,
+			password: password,
+		}).then((response) => {
+			console.log(response);
+			if (response.data.message) {
+				setLoginState(response.data.message);
+			} else {
+				setLoginState(response.data[0].username);
+				// router.push('/');
+			}
+		});
 	};
+
+	useEffect(() => {
+		Axios.get('http://localhost:3004/login').then((response) => {
+			console.log(response);
+			if (response.data.loggedIn == true) {
+				setLoginState(response.data.user[0].username);
+				console.log(loginState);
+			}
+		});
+	}, []);
 
 	const style = {
 		wrapper: `bg-white h-[100vh] flex flex-col items-center`,
@@ -30,28 +59,27 @@ const login = () => {
 					Fill in user name and secured password, then choose sign in or create
 					an account.
 				</p>
-				<form>
-					<h5 className="mb-[5px]">User Name:</h5>
-					<input
-						className={style.container__input}
-						type="text"
-						value={userName}
-						onChange={(e) => setUserName(e.target.value)}
-					/>
-					<h5 className="mb-[5px]">Password:</h5>
-					<input
-						className={style.container__input}
-						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-					/>
-					<button
-						type="submit"
-						onClick={signIn}
-						className={style.signInBtn}>
-						Sign In
-					</button>
-				</form>
+
+				<h5 className="mb-[5px]">User Name:</h5>
+				<input
+					className={style.container__input}
+					type="text"
+					value={userName}
+					onChange={(e) => setUserName(e.target.value)}
+				/>
+				<h5 className="mb-[5px]">Password:</h5>
+				<input
+					className={style.container__input}
+					type="password"
+					value={password}
+					onChange={(e) => setPassword(e.target.value)}
+				/>
+				<button
+					onClick={signIn}
+					className={style.signInBtn}>
+					Sign In
+				</button>
+
 				<p className={style.policy}>
 					By continuing, you agree to Tiktik's{' '}
 					<a
@@ -78,4 +106,4 @@ const login = () => {
 		</div>
 	);
 };
-export default login;
+export default user_auth;

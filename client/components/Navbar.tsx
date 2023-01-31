@@ -2,15 +2,27 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '../utils/tiktik-logo.png';
 import { BiSearch } from 'react-icons/bi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
+import Axios from 'axios';
 
 const Navbar = () => {
 	const [searchValue, setSearchValue] = useState('');
-	const userProfile = null;
 	const handleSearch = (e: { preventDefault: () => void }) => {
 		e.preventDefault();
 	};
+
+	const [user, setUser] = useState('');
+
+	useEffect(() => {
+		Axios.get('http://localhost:3004/login').then((response) => {
+			console.log(response);
+			if (response.data.loggedIn == true) {
+				setUser(response.data.user[0].username);
+				console.log(user);
+			}
+		});
+	}, []);
 
 	const style = {
 		wrapper: `w-full flex justify-between items-center border-b-2 border-gray-200 py-2 px-4`,
@@ -61,8 +73,12 @@ const Navbar = () => {
 			</div>
 
 			<div>
-				{userProfile ? (
+				{user ? (
 					<Link href="/upload">
+						<button className={style.upload__btn}>
+							<IoMdAdd className={style.addIcon} />{' '}
+							<span className={style.upload__txt}>{user}</span>
+						</button>
 						<button className={style.upload__btn}>
 							<IoMdAdd className={style.addIcon} />{' '}
 							<span className={style.upload__txt}>Upload</span>
@@ -70,7 +86,7 @@ const Navbar = () => {
 					</Link>
 				) : (
 					<Link
-						href="/login"
+						href="/user_auth"
 						className={style.user}>
 						<button className={style.user__btn}>
 							<span className={style.user__btnText}>Login or Register</span>
