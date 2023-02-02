@@ -7,8 +7,11 @@ const user_auth = () => {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [loginState, setLoginState] = useState('');
+	const [invalid, setInvalid] = useState(false);
 
 	const router = useRouter();
+
+	Axios.defaults.withCredentials = true;
 
 	const register = () => {
 		Axios.post('http://localhost:3004/register', {
@@ -23,20 +26,21 @@ const user_auth = () => {
 		}).then((response) => {
 			console.log(response);
 			if (response.data.message) {
-				setLoginState(response.data.message);
+				//wrong username/password
+				setLoginState('');
+				setInvalid(true);
 			} else {
 				setLoginState(response.data[0].username);
-				// router.push('/');
+				setInvalid(false);
+				window.location.href = '/';
 			}
 		});
 	};
 
 	useEffect(() => {
 		Axios.get('http://localhost:3004/login').then((response) => {
-			console.log(response);
 			if (response.data.loggedIn == true) {
-				setLoginState(response.data.user[0].username);
-				console.log(loginState);
+				router.push('/');
 			}
 		});
 	}, []);
@@ -46,9 +50,9 @@ const user_auth = () => {
 		container: `w-[340px] h-fit d-flex flex-col py-6 px-8 rounded-[5px] border-[1px] border-solid border-gray-300`,
 		container__header: `font-[500] mb-[20px] text-3xl`,
 		container__subHeader: `text-[12px] mb-2`,
-		container__input: `h-[30px] w-[98%] mb-[10px] p-3 bg-white border-[1px] rounded-[5px] border-solid border-gray-400 focus:outline-none focus:bg-[#ffeaee]`,
+		container__input: `h-[30px] w-[98%] mb-[10px] p-3 bg-white border-[1px] rounded-[5px] border-solid border-gray-400 focus:outline-none focus:bg-[#006aff2b]`,
 		policy: `mt-[15px] text-[12px]`,
-		signInBtn: `bg-pink-600 hover:bg-pink-400 hover:text-black rounded-[10px] w-full h-[30px] border-[1px] border-solid mt-[10px] border-t-[#a83470] border-x-[#9c3175] border-b-[#842964] text-white active:bg-[#F51997] active:text-white active:scale-95 transition transform duration-100 ease-in`,
+		signInBtn: `bg-[#0069ff] hover:bg-[#006aff9a] hover:text-black rounded-[10px] w-full h-[30px] border-[1px] border-solid mt-[10px] border-t-[#003c71] border-x-[#003c71] border-b-[#003c71] text-white active:bg-[#003c71] active:text-white active:scale-95 transition transform duration-100 ease-in`,
 		registerBtn: `rounded-[2px] w-full h-[30px] border-[1px] border-solid mt-[10px] border-gray-400 bg-gray-100 hover:bg-gray-200 active:scale-95 transition transform duration-100 ease-in`,
 	};
 	return (
@@ -81,7 +85,7 @@ const user_auth = () => {
 				</button>
 
 				<p className={style.policy}>
-					By continuing, you agree to Tiktik's{' '}
+					By continuing, you agree to BCIT's{' '}
 					<a
 						className="text-blue-600"
 						href="https://www.bcit.ca/copyright/"
@@ -103,6 +107,10 @@ const user_auth = () => {
 					Create your account
 				</button>
 			</div>
+			<h3 className="text-black text-2xl">
+				{loginState && 'Logged In!!'}
+				{invalid ? 'Wrong username/password. Please try again' : ''}
+			</h3>
 		</div>
 	);
 };

@@ -14,28 +14,24 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - '3310:3306'
-    expose:
-      - '3306'
     volumes:
       - project1-db:/var/lib/mysql
   authentication:
     depends_on:
       - db
-    image: authentication
+    image: authentication:latest
     restart: always
     build: ../authentication
     ports:
       - 3004:3004
-    expose:
-      - '3004'
     networks:
       - 'project1-apiNetwork'
-    volumes:
-      - ../authentication:/usr/src/app
+
   client:
     depends_on:
       - authentication
-    image: client
+      - file_system
+    image: client:latest
     restart: always
     build: ../client
     ports:
@@ -43,8 +39,32 @@ services:
     networks:
       - 'project1-apiNetwork'
     volumes:
-      - ../client:/usr/src/app
+      - project1-uploads:/uploads
+  upload_video:
+    depends_on:
+      - authentication
+    image: upload_video:latest
+    restart: always
+    build: ../upload_video
+    ports:
+      - 4004:3000
+    networks:
+      - 'project1-apiNetwork'
+
+  file_system:
+    depends_on:
+      - db
+    image: file_system:latest
+    restart: always
+    build: ../file_system
+    ports:
+      - 3010:3010
+    networks:
+      - 'project1-apiNetwork'
+    volumes:
+      - project1-uploads:/uploads
 volumes:
   project1-db:
+  project1-uploads:
 networks:
   project1-apiNetwork:

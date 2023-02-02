@@ -17,7 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(
 	cors({
-		origin: ['http://localhost:4000'],
+		origin: [
+			'http://localhost:4000',
+			'http://localhost:4004',
+			'http://localhost:3000',
+		],
 		methods: ['GET', 'POST'],
 		credentials: true,
 	}),
@@ -32,12 +36,12 @@ app.use(
 		resave: true,
 		saveUninitialized: true,
 		cookie: {
-			expires: 60 * 60 * 24,
+			// expires: 60 * 60 * 24, //24 hours
+			expires: new Date(253402300799999), //Fri Dec 31 9999 23:59:59 GMT+0000
 		},
 	}),
 );
 
-//db
 const db = mysql.createConnection({
 	user: 'project1',
 	host: 'db',
@@ -104,6 +108,11 @@ app.get('/login', (req, res) => {
 	} else {
 		res.send({ loggedIn: false });
 	}
+});
+
+app.get('/logout', (req, res) => {
+	req.session.user = null;
+	res.send({ loggedIn: false });
 });
 
 app.listen(PORT, HOST, () => {
