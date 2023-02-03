@@ -16,6 +16,7 @@ services:
       - '3310:3306'
     volumes:
       - project1-db:/var/lib/mysql
+
   authentication:
     depends_on:
       - db
@@ -39,7 +40,8 @@ services:
     networks:
       - 'project1-apiNetwork'
     volumes:
-      - project1-uploads:/uploads
+      - project1-uploads:/app/public/videos
+
   upload_video:
     depends_on:
       - authentication
@@ -62,7 +64,7 @@ services:
     networks:
       - 'project1-apiNetwork'
     volumes:
-      - project1-uploads:/uploads
+      - project1-uploads:/app/public/videos
 volumes:
   project1-db:
   project1-uploads:

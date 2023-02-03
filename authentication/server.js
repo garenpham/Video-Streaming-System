@@ -15,6 +15,9 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 app.use(express.json());
+/**
+ * Set CORS to allow other services to communicate
+ */
 app.use(
 	cors({
 		origin: [
@@ -26,6 +29,10 @@ app.use(
 		credentials: true,
 	}),
 );
+
+/**
+ * Set cookie to save login session
+ */
 app.use(cookieParser());
 app.use(bodyParser.json());
 
@@ -42,6 +49,9 @@ app.use(
 	}),
 );
 
+/**
+ * Initialize connection with mysql-db service
+ */
 const db = mysql.createConnection({
 	user: 'project1',
 	host: 'db',
@@ -51,6 +61,10 @@ const db = mysql.createConnection({
 	multipleStatements: true,
 });
 
+/**
+ * Handle POST request on /register and /login.
+ * Both take in username and password inputs from the user.
+ */
 app.post('/register', (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;

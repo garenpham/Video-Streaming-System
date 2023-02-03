@@ -53,14 +53,14 @@ app.post('/upload', (req, res) => {
 	console.log(req.files);
 	const file = req.files.file;
 
-	file.mv(`${__dirname}/../uploads/${file.name}`, (err) => {
+	file.mv(`${__dirname}/public/videos/${file.name}`, (err) => {
 		if (err) {
 			console.log(err);
-			return res.status(500).send(req);
+			return res.status(500).send(err);
 		}
 
 		const filename = file.name;
-		const filePath = `../../uploads/${file.name}`;
+		const filePath = `./videos/${filename}`;
 
 		db.query(
 			'INSERT INTO uploads (filename,path) VALUES (?,?)',
@@ -70,10 +70,26 @@ app.post('/upload', (req, res) => {
 					res.send({ err: err });
 				}
 				if (result) {
-					res.status(201).send(result);
+					res.status(201).send(file);
 				}
 			},
 		);
+	});
+});
+
+/**
+ * Retrieve list of videos from mysql-db
+ */
+app.get('/view', (req, res) => {
+	db.query('SELECT * FROM uploads', (err, result) => {
+		if (err) {
+			return res.send({ err: err });
+		}
+		if (result.length > 0) {
+			res.send(result);
+		} else {
+			res.send(null);
+		}
 	});
 });
 

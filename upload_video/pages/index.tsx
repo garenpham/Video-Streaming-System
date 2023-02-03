@@ -10,9 +10,9 @@ const Home: NextPage = () => {
 	const style = {
 		wrapper: `flex flex-col items-center justify-center py-2`,
 		container: `bg-white rounded-lg flex justify-between items-center`,
-		upload__wrapper: `border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[20vw] h-[60vh] p-10 cursor-pointer hover:border-[#003c71] hover:bg-gray-100 active:scale-95 transition transform duration-100`,
+		upload__wrapper: `border-dashed rounded-xl border-4 border-gray-200 flex flex-col justify-center items-center outline-none mt-10 w-[20vw] p-10 cursor-pointer hover:border-[#003c71] hover:bg-gray-100 active:scale-95 transition transform duration-100`,
 		upload: `cursor-pointer`,
-		upload__container: `flex flex-col items-center justify-center`,
+		upload__container: `flex flex-col flex-wrap items-center justify-center`,
 		upload__btnContainer: `font-bold text-xl`,
 		upload__btn: `text-gray-300 text-6xl`,
 		upload__txt: `text-xl font-semibold`,
@@ -32,9 +32,11 @@ const Home: NextPage = () => {
 	/**
 	 * Display selected file name
 	 */
-	const videoSelected = async (e: any) => {
+	const [src, setSrc] = useState('');
+	const videoSelected = (e: any) => {
 		setFile(e.target.files[0]);
 		setFilename(e.target.files[0].name);
+		setSrc(URL.createObjectURL(e.target.files[0]));
 	};
 
 	/**
@@ -42,6 +44,7 @@ const Home: NextPage = () => {
 	 */
 	Axios.defaults.withCredentials = true;
 	const submit = async (e: any) => {
+		setFilename('Posting to database...');
 		const formData = new FormData();
 		formData.append('file', file);
 		try {
@@ -52,10 +55,10 @@ const Home: NextPage = () => {
 			});
 			setFilename('Upload Successfully!');
 		} catch (err: any) {
-			if (err.response.status === 500) {
+			if (err.status === 500) {
 				console.log('Server Error');
 			} else {
-				console.log(err.response.data.msg);
+				console.log(err);
 			}
 		}
 	};
@@ -63,8 +66,11 @@ const Home: NextPage = () => {
 	const discard = () => {
 		console.log(file);
 		setFile('');
+		setSrc('');
 		setFilename('Choose File');
 	};
+	console.log(src);
+	console.log(file);
 
 	return (
 		<div className={style.wrapper}>
@@ -78,19 +84,24 @@ const Home: NextPage = () => {
 			<div className={style.container}>
 				<div className={style.upload__wrapper}>
 					<label className={style.upload}>
-						<div className={[style.upload__container, 'h-full'].join(' ')}>
-							<div className={style.upload__container}>
-								<p className={style.upload__btnContainer}>
-									<FaCloudUploadAlt className={style.upload__btn} />
-								</p>
-								<p className={style.upload__txt}>Upload video</p>
-							</div>
-							<p className={style.upload__requirements}>
-								MP4 or WebM or ogg <br />
-								720x1280 or higher <br />
-								Up to 10 minutes <br />
-								Less than 2GB
-							</p>
+						<div className={style.upload__container}>
+							{!src && (
+								<div>
+									<div className={style.upload__container}>
+										<p className={style.upload__btnContainer}>
+											<FaCloudUploadAlt className={style.upload__btn} />
+										</p>
+										<p className={style.upload__txt}>Upload video</p>
+									</div>
+									<p className={style.upload__requirements}>
+										MP4 or WebM or ogg <br />
+										720x1280 or higher <br />
+										Up to 10 minutes <br />
+										Less than 2GB
+									</p>
+								</div>
+							)}
+
 							<p className={style.upload__select}>
 								{filename === 'Choose File' ? 'Select File' : `${filename}`}
 							</p>
@@ -119,6 +130,17 @@ const Home: NextPage = () => {
 					Post
 				</button>
 			</div>
+			{src ? (
+				<video
+					src={src}
+					controls
+					width="40%"
+					className="mt-4">
+					Sorry, your browser doesn't support embedded videos.
+				</video>
+			) : (
+				''
+			)}
 		</div>
 	);
 };

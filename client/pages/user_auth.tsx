@@ -7,6 +7,7 @@ const user_auth = () => {
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [loginState, setLoginState] = useState('');
+	const [created, setCreated] = useState(false);
 	const [invalid, setInvalid] = useState(false);
 
 	const router = useRouter();
@@ -17,7 +18,11 @@ const user_auth = () => {
 		Axios.post('http://localhost:3004/register', {
 			username: userName,
 			password: password,
-		}).then((response) => console.log(response));
+		}).then((response) => {
+			setCreated(true);
+			setLoginState('');
+			setInvalid(false);
+		});
 	};
 	const signIn = () => {
 		Axios.post('http://localhost:3004/login', {
@@ -29,9 +34,11 @@ const user_auth = () => {
 				//wrong username/password
 				setLoginState('');
 				setInvalid(true);
+				setCreated(false);
 			} else {
 				setLoginState(response.data[0].username);
 				setInvalid(false);
+				setCreated(false);
 				window.location.href = '/';
 			}
 		});
@@ -110,6 +117,7 @@ const user_auth = () => {
 			<h3 className="text-black text-2xl">
 				{loginState && 'Logged In!!'}
 				{invalid ? 'Wrong username/password. Please try again' : ''}
+				{created ? 'New User Created!' : ''}
 			</h3>
 		</div>
 	);

@@ -9,11 +9,6 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
-	const [searchValue, setSearchValue] = useState('');
-	const handleSearch = (e: { preventDefault: () => void }) => {
-		e.preventDefault();
-	};
-
 	Axios.defaults.withCredentials = true;
 
 	const [user, setUser] = useState('');
@@ -26,7 +21,7 @@ const Navbar = () => {
 				console.log(response);
 			} else {
 				setUser('');
-				// window.location.href = 'http://localhost:4000';
+				window.location.href = 'http://localhost:4000';
 			}
 		});
 	}, []);

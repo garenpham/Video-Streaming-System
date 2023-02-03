@@ -19,6 +19,10 @@ mysql -u project1 -p
 ```
 
 ```Sql
+SELECT * FROM project1.uploads;
+```
+
+```Sql
 SELECT * FROM project1.users;
 ```
 
@@ -35,7 +39,3 @@ docker builder prune
 ```
 
 https://github.com/bradtraversy/react_file_uploader/tree/master/client/src
-
-```bash
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 LABEL=$LABEL docker-compose build
-```
