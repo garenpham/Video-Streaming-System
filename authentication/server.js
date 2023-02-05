@@ -39,12 +39,13 @@ app.use(bodyParser.json());
 app.use(
 	session({
 		key: 'userId',
-		secret: 'subscribe',
+		secret: 'project1',
 		resave: true,
-		saveUninitialized: true,
+		// prevent empty session objects
+		saveUninitialized: false,
 		cookie: {
-			// expires: 60 * 60 * 24, //24 hours
-			expires: new Date(253402300799999), //Fri Dec 31 9999 23:59:59 GMT+0000
+			// Fri Dec 31 9999 23:59:59 GMT+0000
+			expires: new Date(253402300799999),
 		},
 	}),
 );
@@ -130,12 +131,16 @@ app.get('/logout', (req, res) => {
 });
 
 app.listen(PORT, HOST, () => {
+	/**
+	 * Create table storing users
+	 * while initializing the service
+	 */
 	let createUsers = `
-CREATE TABLE IF NOT EXISTS users
-(id INT NOT NULL AUTO_INCREMENT,
-username VARCHAR(250) NOT NULL,
-password VARCHAR(250) NOT NULL,
-CONSTRAINT login_pk PRIMARY KEY (id))`;
+	CREATE TABLE IF NOT EXISTS users
+	(id INT NOT NULL AUTO_INCREMENT,
+	username VARCHAR(250) NOT NULL,
+	password VARCHAR(250) NOT NULL,
+	CONSTRAINT login_pk PRIMARY KEY (id))`;
 
 	db.query(createUsers, (err, result) => {
 		console.log(err);

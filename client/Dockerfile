@@ -1,10 +1,14 @@
-FROM node:18.13.0
+FROM node:latest
 
 WORKDIR /app
 
-COPY package*.json ./
+# Initiate the Service 
+# and install required dependencies
+COPY package.json .
 RUN npm install
 
+# Deliver the source code to Docker image
 COPY . .
 
+# Run the app
 CMD ["npm","run","dev"]

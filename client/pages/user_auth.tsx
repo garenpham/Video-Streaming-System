@@ -14,8 +14,8 @@ const user_auth = () => {
 
 	Axios.defaults.withCredentials = true;
 
-	const register = () => {
-		Axios.post('http://localhost:3004/register', {
+	const register = async () => {
+		await Axios.post('http://localhost:3004/register', {
 			username: userName,
 			password: password,
 		}).then((response) => {
@@ -24,18 +24,20 @@ const user_auth = () => {
 			setInvalid(false);
 		});
 	};
-	const signIn = () => {
-		Axios.post('http://localhost:3004/login', {
+	const signIn = async () => {
+		await Axios.post('http://localhost:3004/login', {
 			username: userName,
 			password: password,
 		}).then((response) => {
 			console.log(response);
 			if (response.data.message) {
-				//wrong username/password
+				// wrong username/password
 				setLoginState('');
+				// status display
 				setInvalid(true);
 				setCreated(false);
 			} else {
+				// User info received
 				setLoginState(response.data[0].username);
 				setInvalid(false);
 				setCreated(false);

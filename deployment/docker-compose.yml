@@ -23,6 +23,7 @@ services:
     image: authentication:latest
     restart: always
     build: ../authentication
+    # Ports that will be exposed to the host
     ports:
       - 3004:3004
     networks:

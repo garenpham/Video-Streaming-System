@@ -1,11 +1,9 @@
-FROM node:18.13.0
+FROM node:latest
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json .
 RUN npm install
-RUN apt -y update
-RUN apt install -y iputils-ping
 
 COPY . .
 
