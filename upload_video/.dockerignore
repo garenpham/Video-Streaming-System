@@ -3,14 +3,7 @@
 .dockerignore
 .gitignore
 .env
-config
-build
+package-lock.json
 node_modules
-docker-compose.dev.yaml
-docker-compose.prod.yaml
-docker-compose.yaml
 Dockerfile
-Dockerfile.dev
-Dockerfile.prod
-Makefile
 README.md
