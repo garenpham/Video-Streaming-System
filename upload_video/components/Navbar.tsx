@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { AiOutlineLogout } from 'react-icons/ai';
 import Axios from 'axios';
-import { useRouter } from 'next/router';
 
 const Navbar = () => {
 	const [user, setUser] = useState('');
@@ -25,8 +24,6 @@ const Navbar = () => {
 			}
 		});
 	}, []);
-
-	const router = useRouter();
 
 	const logout = () => {
 		Axios.get('http://localhost:3004/logout').then((response) =>
