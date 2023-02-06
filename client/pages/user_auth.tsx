@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
