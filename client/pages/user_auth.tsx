@@ -8,6 +8,7 @@ const user_auth = () => {
 	const [loginState, setLoginState] = useState('');
 	const [created, setCreated] = useState(false);
 	const [invalid, setInvalid] = useState(false);
+	const [existed, setExisted] = useState(false);
 
 	const router = useRouter();
 
@@ -18,9 +19,14 @@ const user_auth = () => {
 			username: userName,
 			password: password,
 		}).then((response) => {
-			setCreated(true);
 			setLoginState('');
 			setInvalid(false);
+			if (response.data.message) {
+				setExisted(true);
+			} else {
+				setCreated(true);
+				setExisted(false);
+			}
 		});
 	};
 	const signIn = async () => {
@@ -35,11 +41,13 @@ const user_auth = () => {
 				// status display
 				setInvalid(true);
 				setCreated(false);
+				setExisted(false);
 			} else {
 				// User info received
 				setLoginState(response.data[0].username);
 				setInvalid(false);
 				setCreated(false);
+				setExisted(false);
 				window.location.href = '/';
 			}
 		});
@@ -119,6 +127,7 @@ const user_auth = () => {
 				{loginState && 'Logged In!!'}
 				{invalid ? 'Wrong username/password. Please try again' : ''}
 				{created ? 'New User Created!' : ''}
+				{existed ? 'User already exist!' : ''}
 			</h3>
 		</div>
 	);
