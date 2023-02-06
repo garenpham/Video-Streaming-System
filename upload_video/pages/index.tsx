@@ -28,11 +28,11 @@ const Home: NextPage = () => {
 
 	const [file, setFile] = useState('');
 	const [filename, setFilename] = useState('Choose File');
+	const [src, setSrc] = useState('');
 
 	/**
 	 * Display selected file name
 	 */
-	const [src, setSrc] = useState('');
 	const videoSelected = (e: any) => {
 		setFile(e.target.files[0]);
 		setFilename(e.target.files[0].name);
