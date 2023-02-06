@@ -9,9 +9,9 @@ import Axios from 'axios';
 import { useRouter } from 'next/router';
 
 const Navbar = () => {
-	Axios.defaults.withCredentials = true;
-
 	const [user, setUser] = useState('');
+
+	Axios.defaults.withCredentials = true;
 
 	useEffect(() => {
 		Axios.get('http://localhost:3004/login').then((response) => {
