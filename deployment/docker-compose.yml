@@ -12,8 +12,6 @@ services:
       MYSQL_USER: project1
       MYSQL_PASSWORD: project1
     command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - '3310:3306'
     volumes:
       - project1-db:/var/lib/mysql
 
