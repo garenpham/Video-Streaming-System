@@ -18,11 +18,12 @@ const user_auth = () => {
 		await Axios.post('http://localhost:3004/register', {
 			username: userName,
 			password: password,
-		}).then((response) => {
+		}).then((response: any) => {
 			setLoginState('');
 			setInvalid(false);
 			if (response.data.message) {
 				setExisted(true);
+				setCreated(false);
 			} else {
 				setCreated(true);
 				setExisted(false);
@@ -33,7 +34,7 @@ const user_auth = () => {
 		await Axios.post('http://localhost:3004/login', {
 			username: userName,
 			password: password,
-		}).then((response) => {
+		}).then((response: any) => {
 			console.log(response);
 			if (response.data.message) {
 				// wrong username/password
