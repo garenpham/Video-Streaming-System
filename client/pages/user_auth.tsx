@@ -13,7 +13,6 @@ const user_auth = () => {
 	const router = useRouter();
 
 	Axios.defaults.withCredentials = true;
-
 	const register = async () => {
 		await Axios.post('http://localhost:3004/register', {
 			username: userName,

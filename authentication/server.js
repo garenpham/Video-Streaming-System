@@ -40,7 +40,6 @@ app.use(
 	session({
 		key: 'userId',
 		secret: 'project1',
-		resave: true,
 		// prevent empty session objects
 		saveUninitialized: false,
 		cookie: {
