@@ -1,8 +1,6 @@
-import { useRef } from 'react';
 import { IVideo } from '../pages';
 
 const VideoCard = ({ id, filename, path }: IVideo) => {
-	const videoRef = useRef<HTMLVideoElement>(null);
 	return (
 		<video
 			controls

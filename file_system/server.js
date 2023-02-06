@@ -42,9 +42,7 @@ app.get('/', (req, res) => {
  * POST request /upload
  * Move video file into shared volume - project1-uploads
  * Save the file path for accessing videos to shared volume.
- * Then access it from client web
- * /app/../uploads/<video> - file system
- * /client/pages/../../uploads/<video> - client
+ * Then access it from video streaming web
  */
 app.post('/upload', (req, res) => {
 	if (req.files === null) {
