@@ -13,7 +13,7 @@ const Navbar = () => {
 	const [user, setUser] = useState('');
 
 	useEffect(() => {
-		Axios.get('http://localhost:3004/login').then((response) => {
+		Axios.get('http://localhost:4010/login').then((response) => {
 			if (response.data.loggedIn == true) {
 				setUser(response.data.user[0].username);
 			}
@@ -23,7 +23,7 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const logout = () => {
-		Axios.get('http://localhost:3004/logout').then((response) => {
+		Axios.get('http://localhost:4010/logout').then((response) => {
 			console.log(response);
 			router.reload();
 		});

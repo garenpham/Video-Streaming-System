@@ -28,7 +28,7 @@ const Home: NextPage = () => {
 				 * Authentication service is located on port 3004,
 				 * exposing to the host network
 				 */
-				await Axios.get('http://localhost:3004/login').then((response) => {
+				await Axios.get('http://localhost:4010/login').then((response) => {
 					if (response.data.loggedIn === true) {
 						// Set current logged in user
 						setUser(response.data.user[0].username);
@@ -45,7 +45,7 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		try {
 			const getVideos = async () => {
-				await Axios.get('http://localhost:3010/view').then((response) => {
+				await Axios.get('http://localhost:4010/view').then((response) => {
 					if (response) {
 						console.log(response.data);
 						setVideos(response.data);

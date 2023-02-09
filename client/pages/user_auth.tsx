@@ -13,9 +13,8 @@ const user_auth = () => {
 	const router = useRouter();
 
 	Axios.defaults.withCredentials = true;
-
 	const register = async () => {
-		await Axios.post('http://localhost:3004/register', {
+		await Axios.post('http://localhost:4010/register', {
 			username: userName,
 			password: password,
 		}).then((response: any) => {
@@ -31,7 +30,7 @@ const user_auth = () => {
 		});
 	};
 	const signIn = async () => {
-		await Axios.post('http://localhost:3004/login', {
+		await Axios.post('http://localhost:4010/login', {
 			username: userName,
 			password: password,
 		}).then((response: any) => {
@@ -55,7 +54,7 @@ const user_auth = () => {
 	};
 
 	useEffect(() => {
-		Axios.get('http://localhost:3004/login').then((response) => {
+		Axios.get('http://localhost:4010/login').then((response) => {
 			if (response.data.loggedIn == true) {
 				router.push('/');
 			}
