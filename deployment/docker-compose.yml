@@ -18,23 +18,18 @@ services:
   authentication:
     depends_on:
       - db
-    image: authentication:latest
+    image: phamminhtan2k2/video-streaming-authentication:v1
     restart: always
     build: ../authentication
-    # Ports that will be exposed to the host
-    # ports:
-    #   - 3004:3004
     networks:
       - 'project1-apiNetwork'
 
   file_system:
     depends_on:
       - db
-    image: file_system:latest
+    image: phamminhtan2k2/video-streaming-file:v1
     restart: always
     build: ../file_system
-    # ports:
-    #   - 3010:3010
     networks:
       - 'project1-apiNetwork'
     volumes:
@@ -57,7 +52,7 @@ services:
       - authentication
       - file_system
       - nginx
-    image: client:latest
+    image: phamminhtan2k2/video-streaming-client:v1
     restart: always
     build: ../client
     ports:
@@ -71,7 +66,7 @@ services:
     depends_on:
       - authentication
       - nginx
-    image: upload_video:latest
+    image: phamminhtan2k2/video-streaming-uploads:v1
     restart: always
     build: ../upload_video
     ports:

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: D:\CIT\3495\videostreaming\deployment\kompose.exe convert
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: file-system
+  name: file-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: file-system
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: D:\CIT\3495\videostreaming\deployment\kompose.exe convert
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/video-streaming-system-project1-apinetwork: "true"
+        io.kompose.service: file-system
+    spec:
+      containers:
+        - image: phamminhtan2k2/video-streaming-file:v1
+          name: file-system
+          resources: {}
+          volumeMounts:
+            - mountPath: /app/public/videos
+              name: project1-uploads
+      restartPolicy: Always
+      volumes:
+        - name: project1-uploads
+          persistentVolumeClaim:
+            claimName: project1-uploads
+status: {}
