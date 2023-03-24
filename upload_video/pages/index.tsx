@@ -48,11 +48,6 @@ const Home: NextPage = () => {
 		const formData = new FormData();
 		formData.append('file', file);
 		try {
-			// await Axios.post('http://localhost:4010/upload', formData, {
-			// 	headers: {
-			// 		'Content-Type': 'multipart/form-data',
-			// 	},
-			// })
 			await Axios({
 				method: 'post',
 				url: 'http://localhost:4010/upload',

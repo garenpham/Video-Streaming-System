@@ -1,0 +1,42 @@
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: authentication
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3004
+  selector:
+    app: authentication
+---
+# Pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authentication-deploy
+  labels:
+    app: authentication
+spec:
+  selector:
+    matchLabels:
+      app: authentication
+  minReadySeconds: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: authentication
+    spec:
+      terminationGracePeriodSeconds: 1
+      containers:
+        - name: authentication
+          image: phamminhtan2k2/video-streaming-authentication:v1
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3004

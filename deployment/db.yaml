@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: db
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deploy
+  labels:
+    app: db
+spec:
+  selector:
+    matchLabels:
+      app: db
+  minReadySeconds: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      terminationGracePeriodSeconds: 1
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: project1
+            - name: MYSQL_PASSWORD
+              value: project1
+            - name: MYSQL_ROOT_PASSWORD
+              value: project1
+            - name: MYSQL_USER
+              value: project1
+          name: db
+          image: mysql:5.7
+          volumeMounts:
+            - mountPath: '/var/lib/mysql'
+              name: db-storage
+          ports:
+            - containerPort: 3306

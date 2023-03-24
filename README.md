@@ -1,6 +1,10 @@
 Access to container:
 
 ```bash
+kubectl apply -f db.yaml -f authentication.yaml -f shared-storage.yaml -f client.yaml -f uploads.yaml -f file-system.yaml -f nginx.yaml
+```
+
+```bash
 docker exec -it video-streaming-system-db-1 /bin/bash
 ```
 

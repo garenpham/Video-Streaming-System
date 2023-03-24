@@ -20,7 +20,7 @@ const Navbar = () => {
 				console.log(response);
 			} else {
 				setUser('');
-				window.location.href = 'http://localhost:4000';
+				window.location.href = 'http://localhost';
 			}
 		});
 	}, []);
@@ -45,7 +45,7 @@ const Navbar = () => {
 	};
 	return (
 		<div className={style.wrapper}>
-			<Link href="http://localhost:4000">
+			<Link href="http://localhost">
 				<div className={style.img__container}>
 					<Image
 						src={Logo}
@@ -64,7 +64,7 @@ const Navbar = () => {
 				<button className={style.user__btn}>
 					<span className={style.user__btnText}>Hello, {user}👍</span>
 				</button>
-				<Link href="http://localhost:4000">
+				<Link href="http://localhost">
 					<button
 						type="button"
 						className={style.logout}

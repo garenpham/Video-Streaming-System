@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: shared-pv
+spec:
+  capacity:
+    storage: 40Mi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: shared-storage
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/shared
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shared-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 40Mi
+  storageClassName: shared-storage

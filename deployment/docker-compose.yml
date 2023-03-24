@@ -11,7 +11,6 @@ services:
       MYSQL_DATABASE: project1
       MYSQL_USER: project1
       MYSQL_PASSWORD: project1
-    command: --default-authentication-plugin=mysql_native_password
     volumes:
       - project1-db:/var/lib/mysql
 
@@ -20,7 +19,6 @@ services:
       - db
     image: phamminhtan2k2/video-streaming-authentication:v1
     restart: always
-    build: ../authentication
     networks:
       - 'project1-apiNetwork'
 
@@ -29,7 +27,6 @@ services:
       - db
     image: phamminhtan2k2/video-streaming-file:v1
     restart: always
-    build: ../file_system
     networks:
       - 'project1-apiNetwork'
     volumes:
@@ -39,13 +36,11 @@ services:
     depends_on:
       - authentication
       - file_system
-    image: nginx:latest
+    image: phamminhtan2k2/video-streaming-nginx:v1
     ports:
       - 4010:80
     networks:
       - 'project1-apiNetwork'
-    volumes:
-      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
 
   client:
     depends_on:
@@ -54,7 +49,6 @@ services:
       - nginx
     image: phamminhtan2k2/video-streaming-client:v1
     restart: always
-    build: ../client
     ports:
       - 4000:3000
     networks:
@@ -68,7 +62,6 @@ services:
       - nginx
     image: phamminhtan2k2/video-streaming-uploads:v1
     restart: always
-    build: ../upload_video
     ports:
       - 4004:3000
     networks:
