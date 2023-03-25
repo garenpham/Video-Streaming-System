@@ -13,6 +13,12 @@ kubectl apply -f file-system.yaml -f nginx.yaml
 ```
 
 ```bash
+kubectl exec -it <podId> -- /bin/bash
+```
+
+Docker:
+
+```bash
 docker exec -it video-streaming-system-db-1 /bin/bash
 ```
 
