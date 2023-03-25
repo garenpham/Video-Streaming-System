@@ -1,7 +1,15 @@
 Access to container:
 
 ```bash
-kubectl apply -f db.yaml -f authentication.yaml -f shared-storage.yaml -f client.yaml -f uploads.yaml -f file-system.yaml -f nginx.yaml
+kubectl apply -f db.yaml -f shared-storage.yaml
+```
+
+```bash
+kubectl apply -f authentication.yaml -f client.yaml -f uploads.yaml
+```
+
+```bash
+kubectl apply -f file-system.yaml -f nginx.yaml
 ```
 
 ```bash
