@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(
 	cors({
 		origin: [
-			'http://localhost',
+			process.env.LOCAL_URL,
 			'http://localhost:4010',
 			'http://localhost:4000',
 			'http://localhost:4004',

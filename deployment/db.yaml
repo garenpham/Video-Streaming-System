@@ -11,6 +11,20 @@ spec:
     app: db
 ---
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: db-pv
+spec:
+  capacity:
+    storage: 10Mi
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: db-storagepv
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data/mysqldata/
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: db-pvc
@@ -20,6 +34,17 @@ spec:
   resources:
     requests:
       storage: 10Mi
+  storageClassName: db-storagepv
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-env
+data:
+  MYSQL_DATABASE: project1
+  MYSQL_PASSWORD: project1
+  MYSQL_ROOT_PASSWORD: project1
+  MYSQL_USER: project1
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -47,18 +72,15 @@ spec:
         - name: db-storage
           persistentVolumeClaim:
             claimName: db-pvc
+        - name: db-env
+          configMap:
+            name: db-env
       containers:
-        - env:
-            - name: MYSQL_DATABASE
-              value: project1
-            - name: MYSQL_PASSWORD
-              value: project1
-            - name: MYSQL_ROOT_PASSWORD
-              value: project1
-            - name: MYSQL_USER
-              value: project1
-          name: db
+        - name: db
           image: mysql:5.7
+          envFrom:
+            - configMapRef:
+                name: db-env
           volumeMounts:
             - mountPath: '/var/lib/mysql'
               name: db-storage

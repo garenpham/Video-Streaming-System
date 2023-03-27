@@ -22,7 +22,6 @@ spec:
   selector:
     matchLabels:
       app: nginx
-  #replicas: 2
   minReadySeconds: 4
   strategy:
     type: RollingUpdate

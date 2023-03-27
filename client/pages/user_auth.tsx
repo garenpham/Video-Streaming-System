@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
+import { BASE_URL } from '../constants';
 
 const user_auth = () => {
 	const [userName, setUserName] = useState('');
@@ -12,9 +13,9 @@ const user_auth = () => {
 
 	const router = useRouter();
 
-	Axios.defaults.withCredentials = true;
+	//Axios.defaults.withCredentials = true;
 	const register = async () => {
-		await Axios.post('http://localhost:4010/register', {
+		await Axios.post(`${BASE_URL}/register`, {
 			username: userName,
 			password: password,
 		}).then((response: any) => {
@@ -30,7 +31,7 @@ const user_auth = () => {
 		});
 	};
 	const signIn = async () => {
-		await Axios.post('http://localhost:4010/login', {
+		await Axios.post(`${BASE_URL}/login`, {
 			username: userName,
 			password: password,
 		}).then((response: any) => {
@@ -54,7 +55,7 @@ const user_auth = () => {
 	};
 
 	useEffect(() => {
-		Axios.get('http://localhost:4010/login').then((response) => {
+		Axios.get(`${BASE_URL}/login`).then((response) => {
 			if (response.data.loggedIn == true) {
 				router.push('/');
 			}

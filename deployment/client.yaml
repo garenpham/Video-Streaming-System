@@ -11,6 +11,13 @@ spec:
   selector:
     app: client
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: base-url
+data:
+  NEXT_PUBLIC_BASE_URL: http://a4c202d19512342edb3bf54eb9b6161d-1674851257.us-west-2.elb.amazonaws.com:4010
+---
 # Pods
 apiVersion: apps/v1
 kind: Deployment
@@ -39,10 +46,16 @@ spec:
         - name: videos-storage
           persistentVolumeClaim:
             claimName: shared-pvc
+        - name: base-url
+          configMap:
+            name: base-url
       containers:
         - name: client
           image: phamminhtan2k2/video-streaming-client:v1
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: base-url
           ports:
             - containerPort: 3000
           volumeMounts:

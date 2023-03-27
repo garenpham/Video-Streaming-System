@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import Axios from 'axios';
 import { useRouter } from 'next/router';
+import { BASE_URL } from '../constants';
 
 const Navbar = () => {
 	Axios.defaults.withCredentials = true;
@@ -13,7 +14,7 @@ const Navbar = () => {
 	const [user, setUser] = useState('');
 
 	useEffect(() => {
-		Axios.get('http://localhost:4010/login').then((response) => {
+		Axios.get(`${BASE_URL}/login`).then((response) => {
 			if (response.data.loggedIn == true) {
 				setUser(response.data.user[0].username);
 			}
@@ -23,7 +24,7 @@ const Navbar = () => {
 	const router = useRouter();
 
 	const logout = () => {
-		Axios.get('http://localhost:4010/logout').then((response) => {
+		Axios.get(`${BASE_URL}/logout`).then((response) => {
 			console.log(response);
 			router.reload();
 		});
@@ -45,6 +46,7 @@ const Navbar = () => {
 		logout__btn: `border-2 px-2 md:px-4 text-md font-semibold flex items-center gap-2 hover:text-white hover:bg-[#0069ff] active:text-white active:bg-[#003c71] active:scale-95 transform transition duration-100 ease-in`,
 		logout__btnText: ``,
 	};
+
 	return (
 		<div className={style.wrapper}>
 			<Link href="/">
@@ -71,7 +73,7 @@ const Navbar = () => {
 			<div>
 				{user ? (
 					<div className={style.signed}>
-						<Link href="http://localhost:4004">
+						<Link href="/upload">
 							<button className={style.upload__btn}>
 								<IoMdAdd className={style.addIcon} />{' '}
 								<span className={style.upload__txt}>Upload video</span>
@@ -85,7 +87,7 @@ const Navbar = () => {
 					</div>
 				) : (
 					<Link
-						href="/user_auth"
+						href={`/user_auth`}
 						className={style.notSigned}>
 						<button className={style.notSigned__btn}>
 							<span className={style.notSigned__btnText}>

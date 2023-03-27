@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { AiOutlineLogout } from 'react-icons/ai';
 import Axios from 'axios';
+import { BASE_URL, HOME_URL } from '../constants';
 
 const Navbar = () => {
 	const [user, setUser] = useState('');
@@ -13,22 +14,20 @@ const Navbar = () => {
 	Axios.defaults.withCredentials = true;
 
 	useEffect(() => {
-		Axios.get('http://localhost:4010/login').then((response) => {
+		Axios.get(`${BASE_URL}/login`).then((response) => {
 			console.log(response);
 			if (response.data.loggedIn == true) {
 				setUser(response.data.user[0].username);
 				console.log(response);
 			} else {
 				setUser('');
-				window.location.href = 'http://localhost';
+				window.location.href = `${HOME_URL}`;
 			}
 		});
 	}, []);
 
 	const logout = () => {
-		Axios.get('http://localhost:4010/logout').then((response) =>
-			console.log(response),
-		);
+		Axios.get(`${BASE_URL}/logout`).then((response) => console.log(response));
 		setUser('');
 	};
 
@@ -45,7 +44,7 @@ const Navbar = () => {
 	};
 	return (
 		<div className={style.wrapper}>
-			<Link href="http://localhost">
+			<Link href={`${HOME_URL}`}>
 				<div className={style.img__container}>
 					<Image
 						src={Logo}
@@ -64,7 +63,7 @@ const Navbar = () => {
 				<button className={style.user__btn}>
 					<span className={style.user__btnText}>Hello, {user}👍</span>
 				</button>
-				<Link href="http://localhost">
+				<Link href={`${HOME_URL}`}>
 					<button
 						type="button"
 						className={style.logout}

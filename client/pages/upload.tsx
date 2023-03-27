@@ -7,7 +7,7 @@ import { MdDelete } from 'react-icons/md';
 import Axios from 'axios';
 import { BASE_URL } from '../constants';
 
-const Home: NextPage = () => {
+const upload = () => {
 	const style = {
 		wrapper: `flex flex-col items-center justify-center py-2`,
 		container: `bg-white rounded-lg flex justify-between items-center`,
@@ -43,7 +43,7 @@ const Home: NextPage = () => {
 	/**
 	 * Upload video to file system
 	 */
-	Axios.defaults.withCredentials = true;
+	//Axios.defaults.withCredentials = true;
 	const submit = async (e: any) => {
 		setFilename('Posting to database...');
 		const formData = new FormData();
@@ -149,4 +149,4 @@ const Home: NextPage = () => {
 	);
 };
 
-export default Home;
+export default upload;

@@ -21,9 +21,8 @@ app.use(express.json());
 app.use(
 	cors({
 		origin: [
-			'http://localhost',
+			process.env.LOCAL_URL,
 			'http://localhost:4000',
-			'http://localhost:4010',
 			'http://localhost:4004',
 			'http://localhost:3000',
 		],
@@ -42,11 +41,15 @@ app.use(
 	session({
 		key: 'userId',
 		secret: 'project1',
+		resave: false,
 		// prevent empty session objects
 		saveUninitialized: false,
 		cookie: {
 			// Fri Dec 31 9999 23:59:59 GMT+0000
-			expires: new Date(253402300799999),
+			// httpOnly: true,
+			// sameSite: none,
+			maxAge: 1000 * 60 * 60 * 24 * 10,
+			secure: false,
 		},
 	}),
 );
@@ -61,6 +64,10 @@ const db = mysql.createConnection({
 	password: 'project1',
 	database: 'project1',
 	multipleStatements: true,
+});
+
+app.get('/', (req, res) => {
+	res.send({ clientIP: req.ip, clientHost: req.hostname });
 });
 
 /**
@@ -124,6 +131,7 @@ app.get('/login', (req, res) => {
 	} else {
 		res.send({ loggedIn: false });
 	}
+	console.log(process.env.LOCAL_URL);
 });
 
 app.get('/logout', (req, res) => {

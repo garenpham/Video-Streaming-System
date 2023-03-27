@@ -3,6 +3,7 @@ import Head from 'next/head';
 import VideoCard from '../components/VideoCard';
 import Axios from 'axios';
 import { useEffect, useState } from 'react';
+import { BASE_URL } from '../constants';
 
 export interface IVideo {
 	id: number;
@@ -21,6 +22,7 @@ const Home: NextPage = () => {
 	 * Make a request for current user logged in to the server,
 	 * when every time this page loads
 	 */
+	//Axios.defaults.withCredentials = true;
 	useEffect(() => {
 		try {
 			const getUser = async () => {
@@ -28,11 +30,12 @@ const Home: NextPage = () => {
 				 * Authentication service is located on port 3004,
 				 * exposing to the host network
 				 */
-				await Axios.get('http://localhost:4010/login').then((response) => {
+				await Axios.get(`${BASE_URL}/login`).then((response) => {
 					if (response.data.loggedIn === true) {
 						// Set current logged in user
 						setUser(response.data.user[0].username);
 					}
+					console.log(response);
 				});
 			};
 			getUser();
@@ -45,7 +48,7 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		try {
 			const getVideos = async () => {
-				await Axios.get('http://localhost:4010/view').then((response) => {
+				await Axios.get(`${BASE_URL}/view`).then((response) => {
 					if (response) {
 						console.log(response.data);
 						setVideos(response.data);

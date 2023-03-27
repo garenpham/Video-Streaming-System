@@ -38,12 +38,31 @@ spec:
         - name: videos-storage
           persistentVolumeClaim:
             claimName: shared-pvc
+        - name: cors
+          configMap:
+            name: cors
       containers:
         - name: filesystem
           image: phamminhtan2k2/video-streaming-file:v1
           imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: cors
           ports:
             - containerPort: 3010
           volumeMounts:
             - mountPath: '/app/public/videos'
               name: videos-storage
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: filesystem-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: filesystem-deploy
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 14

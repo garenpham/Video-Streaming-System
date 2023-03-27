@@ -1,19 +1,40 @@
 Access to container:
 
 ```bash
-kubectl apply -f db.yaml -f shared-storage.yaml
+kubectl apply -f db.yaml -f configmaps.yaml -f authentication.yaml -f shared-storage.yaml -f nginx.yaml -f file-system.yaml -f client.yaml
 ```
 
 ```bash
-kubectl apply -f authentication.yaml -f client.yaml -f uploads.yaml
+kubectl apply -f db.yaml -f shared-storage.yaml -f nginx.yaml
 ```
 
 ```bash
-kubectl apply -f file-system.yaml -f nginx.yaml
+kubectl apply -f client.yaml
+```
+
+```bash
+kubectl apply -f configmaps.yaml -f authentication.yaml
+```
+
+```bash
+kubectl apply -f file-system.yaml
+```
+
+```bash
+kubectl delete -f db.yaml -f authentication.yaml -f shared-storage.yaml -f nginx.yaml -f file-system.yaml -f client.yaml
 ```
 
 ```bash
 kubectl exec -it <podId> -- /bin/bash
+```
+
+```bash
+kubectl config get-contexts
+kubectl config use-context docker-desktop
+```
+
+```bash
+aws eks update-kubeconfig --region <region-code> --name <my-cluster>
 ```
 
 Docker:
