@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: cors
 data:
-  LOCAL_URL: http://abac961ac56da4846a82dbacda516d81-1851637641.us-west-2.elb.amazonaws.com
+  CLIENT_URL: http://<clientDNS>

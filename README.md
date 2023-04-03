@@ -21,6 +21,10 @@ kubectl apply -f file-system.yaml
 ```
 
 ```bash
+aws eks update-kubeconfig --region <region-code> --name <my-cluster>
+```
+
+```bash
 kubectl delete -f db.yaml -f authentication.yaml -f shared-storage.yaml -f nginx.yaml -f file-system.yaml -f client.yaml
 ```
 
@@ -31,10 +35,6 @@ kubectl exec -it <podId> -- /bin/bash
 ```bash
 kubectl config get-contexts
 kubectl config use-context docker-desktop
-```
-
-```bash
-aws eks update-kubeconfig --region <region-code> --name <my-cluster>
 ```
 
 Docker:

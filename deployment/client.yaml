@@ -16,7 +16,7 @@ kind: ConfigMap
 metadata:
   name: base-url
 data:
-  NEXT_PUBLIC_BASE_URL: http://a4c202d19512342edb3bf54eb9b6161d-1674851257.us-west-2.elb.amazonaws.com:4010
+  NEXT_PUBLIC_NGINX_URL: http://<nginxDNS>
 ---
 # Pods
 apiVersion: apps/v1
