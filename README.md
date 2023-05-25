@@ -1,4 +1,18 @@
-### Please read the project report for detailed explaination about the project.
+## Please read the project report for detailed explaination about the project.
+
+This branch is the Kubernetes development, which is continued from the main
+branch that focuses on Docker deployment.
+
+### Technologies implemented:
+
+<img align="left" alt="Next.js" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Tabler-icons_brand-nextjs.svg/640px-Tabler-icons_brand-nextjs.svg.png" />
+<img align="left" alt="Docker" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Docker_%28container_engine%29_logo_%28cropped%29.png" />
+<img align="left" alt="Kubernetes" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Kubernetes_%28container_engine%29.png/640px-Kubernetes_%28container_engine%29.png" />
+<img align="left" alt="Amazon Web Services" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/640px-Amazon_Web_Services_Logo.svg.png" />
+<img align="left" alt="TypeScript" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/640px-Typescript_logo_2020.svg.png" />
+<img align="left" alt="VSCode" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/640px-Visual_Studio_Code_1.35_icon.svg.png" />
+
+### Command template:
 
 Access to container:
 
