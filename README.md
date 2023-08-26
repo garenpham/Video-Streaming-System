@@ -1,7 +1,8 @@
-## Please read the project report for detailed explaination about the project.
+## Video Streaming System Web App
 
-This branch is the Kubernetes development, which is continued from the main
-branch that focuses on Docker deployment.
+Video streaming is a complex and challenging application that involves multiple components working together to deliver high-quality video content to the end users. These components include media servers, databases, load balancers, and frontend web servers, each of which has its own requirements and dependencies. To deploy and manage these components effectively, a platform that automates the orchestration and scaling of containerized applications is needed. 
+
+Kubernetes is such a platform, but it also introduces new concepts and features that need to be understood and configured properly. In this project, we will explore how to use Kubernetes to deploy a video streaming system and explore some of the key Kubernetes concepts, such as Pods, Deployments, Services, and ConfigMaps, that are essential for the application deployment.
 
 ### Technologies implemented:
 
@@ -13,86 +14,3 @@ branch that focuses on Docker deployment.
 <img align="left" alt="VSCode" height="24px" width="24px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/640px-Visual_Studio_Code_1.35_icon.svg.png" />
 
 <br/>
-
-### Command template:
-
-Access to container:
-
-```bash
-kubectl apply -f db.yaml -f configmaps.yaml -f authentication.yaml -f shared-storage.yaml -f nginx.yaml -f file-system.yaml -f client.yaml
-```
-
-```bash
-kubectl apply -f db.yaml -f shared-storage.yaml -f nginx.yaml
-```
-
-```bash
-kubectl apply -f client.yaml
-```
-
-```bash
-kubectl apply -f configmaps.yaml -f authentication.yaml
-```
-
-```bash
-kubectl apply -f file-system.yaml
-```
-
-```bash
-aws eks update-kubeconfig --region <region-code> --name <my-cluster>
-```
-
-```bash
-kubectl delete -f db.yaml -f authentication.yaml -f shared-storage.yaml -f nginx.yaml -f file-system.yaml -f client.yaml
-```
-
-```bash
-kubectl exec -it <podId> -- /bin/bash
-```
-
-```bash
-kubectl config get-contexts
-kubectl config use-context docker-desktop
-```
-
-Docker:
-
-```bash
-docker exec -it video-streaming-system-db-1 /bin/bash
-```
-
-Remove all containers:
-
-```bash
-docker-compose rm -vf
-```
-
-```bash
-docker-compose build --no-cache
-```
-
-```bash
-mysql -u project1 -p
-```
-
-```Sql
-SELECT * FROM project1.uploads;
-```
-
-```Sql
-SELECT * FROM project1.users;
-```
-
-View docker local storage:
-
-```bash
-docker system df
-```
-
-Remove all build cache:
-
-```bash
-docker builder prune
-```
-
-https://github.com/bradtraversy/react_file_uploader/tree/master/client/src
